@@ -16,9 +16,13 @@ export default function Login() {
     try {
       const res = await api.post("/auth/login", { email, password });
       const { token, user } = res.data;
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(user));
 
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
+    // double-sure navigation under HashRouter:
+    window.location.hash = "#/groups";
+
+
 
       navigate("/groups"); // redirect to main dashboard
     } catch (err) {
